@@ -1,0 +1,50 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "onePingPerDM",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "One Ping Per DM",
+    "donate": "https://github.com/sponsors/meguminsama",
+    "tagline": "If unread messages are sent in the same DM channel multiple times, only receive one audio ping.",
+    "description": "When you receive multiple DMs in a row in the same channel, you will only get pinged for the first message, until you have read all of the unread messages in the channel.",
+    "authors": ["Megumin", "ProffDea"],
+    "tags": ["qol", "accessibility"],
+    "source": "https://github.com/meguminsama/moonlight-extensions"
+  },
+  "settings": {
+    "typeOfDM": {
+      "displayName": "Type of DM to apply ping restrictions to",
+      "description": "The effects of this plugin will only apply to the selected types of channel.",
+      "type": "select",
+      "advice": "none",
+      "default": "both",
+      "options": [
+        {
+          "label": "User & Group DMs",
+          "value": "both"
+        },
+        {
+          "label": "User DMs",
+          "value": "user_dm"
+        },
+        {
+          "label": "Group DMs",
+          "value": "group_dm"
+        }
+      ]
+    },
+    "allowMentionsBypass": {
+      "displayName": "Allow @mentions to bypass the ping restrictions",
+      "advice": "none",
+      "type": "boolean",
+      "default": false
+    },
+    "allowAtEveryoneBypass": {
+      "displayName": "Allow @everyone and @here to bypass the ping restrictions",
+      "advice": "none",
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
