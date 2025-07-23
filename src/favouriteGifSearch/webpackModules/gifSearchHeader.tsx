@@ -35,6 +35,7 @@ interface GifPickerThis {
 	props: {
 		favorites: FavouriteGif[];
 		originalFavorites: FavouriteGif[];
+		_fuzzyFuse: Fuse<FavouriteGif>;
 		searchBarRef: React.Ref<typeof SearchBar>;
 	};
 	forceUpdate(): void;
@@ -55,8 +56,7 @@ export function renderGifSearchHeader(_this: GifPickerThis) {
 				return;
 			}
 
-			const fuse = new Fuse(_this.props.originalFavorites, { keys: ["url"] });
-			const result = fuse.search(query);
+			const result = _this.props._fuzzyFuse.search(query);
 
 			props.favorites = result.map((i) => i.item);
 
@@ -91,4 +91,87 @@ export function renderGifSearchHeader(_this: GifPickerThis) {
 			autoFocus={autoFocus}
 		/>
 	);
+}
+
+export function createFuse(_this: GifPickerThis) {
+	const fuse = new Fuse(_this.props.originalFavorites, {
+		keys: [
+			{
+				name: "_fuzzyQuery.pathName",
+				weight: 10,
+			},
+			{
+				name: "_fuzzyQuery.queryParams",
+				weight: 5,
+			},
+			{
+				name: "_fuzzyQuery.website",
+				weight: 1,
+			},
+		],
+	});
+
+	return fuse;
+}
+
+/**
+ * This functions loops over the favourite gifs, and generates fuzzy queries for them
+ *
+ * These are prioritised in the fuzzy search in the following order:
+ *
+ * 1. pathName: This is the "/path/to/name.gif" of the file.
+ *              If the domain is discord or tenor, it will just be the file name.
+ *
+ * 2. queryParams: This is the ?query=params in the URL.
+ *
+ * 3. website: This is either "discord", "tenor", or "".
+ *             This allows you to search "cat discord" or "cat tenor" to sort the gifs based on the website.
+ * @param favs The Discord favourites array
+ * @returns The favourites array with the fuzzy filter values inserted.
+ */
+export function generateFilters(favs: FavouriteGif[]): FavouriteGif[] {
+	return favs.map((fav) => {
+		try {
+			let url = new URL(fav.url);
+
+			// If the domain is Discord, remove the /attachments/:id1/:id2/
+			let hostname = url.hostname.toLowerCase();
+			let pathName = url.pathname.toLowerCase();
+			let website = url.hostname;
+
+			let isDiscord =
+				hostname === "cdn.discordapp.com" || // cdn URLs
+				hostname.endsWith("discordapp.net"); // media., images-ext-\d, ...
+
+			let isTenor =
+				hostname === "tenor.com" || hostname.startsWith(".tenor.com");
+
+			if (isDiscord) {
+				website = "discord";
+				if (
+					pathName.startsWith("/attachments/") ||
+					pathName.startsWith("/external/")
+				) {
+					pathName = pathName.split("/").pop() ?? pathName;
+				}
+			} else if (isTenor) {
+				website = "tenor";
+				pathName = pathName.split("/").pop() ?? pathName;
+			} else {
+				// Improve search by separating the path name into separate words
+				pathName = pathName.split("/").join(" ");
+			}
+
+			return {
+				...fav,
+				_fuzzyQuery: {
+					pathName: pathName, // first priority
+					queryParams: url.search, // second priority
+					website: website, // third priority
+				},
+			};
+		} catch (e) {
+			return { ...fav };
+		}
+	});
 }

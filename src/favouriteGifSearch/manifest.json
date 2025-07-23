@@ -10,7 +10,8 @@
 		"description": "This extension adds a search bar to the favourite gifs picker.",
 		"authors": ["Megumin"],
 		"tags": ["qol"],
-		"source": "https://github.com/MeguminSama/moonlight-extensions"
+		"source": "https://github.com/MeguminSama/moonlight-extensions",
+		"changelog": "Fixed searching for non-tenor gifs & significantly improved search result quality."
 	},
 	"settings": {
 		"autoFocus": {
