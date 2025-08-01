@@ -1,25 +1,25 @@
 {
-	"$schema": "https://moonlight-mod.github.io/manifest.schema.json",
-	"id": "favouriteGifSearch",
-	"version": "1.0.1",
-	"apiLevel": 2,
-	"meta": {
-		"name": "Favorite GIF Search",
-		"donate": "https://github.com/sponsors/meguminsama",
-		"tagline": "Search through your favourited gifs!",
-		"description": "This extension adds a search bar to the favourite gifs picker.",
-		"authors": ["Megumin"],
-		"tags": ["qol"],
-		"source": "https://github.com/MeguminSama/moonlight-extensions",
-		"changelog": "Fixed searching for non-tenor gifs & significantly improved search result quality."
-	},
-	"settings": {
-		"autoFocus": {
-			"displayName": "Automatically focus the search box",
-			"description": "When you open the favourites GIF picker, the search box will automatically be selected.",
-			"type": "boolean",
-			"advice": "none",
-			"default": true
-		}
-	}
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "favouriteGifSearch",
+  "version": "1.0.2",
+  "apiLevel": 2,
+  "meta": {
+    "name": "Favorite GIF Search",
+    "donate": "https://github.com/sponsors/meguminsama",
+    "tagline": "Search through your favourited gifs!",
+    "description": "This extension adds a search bar to the favourite gifs picker.",
+    "authors": ["Megumin"],
+    "tags": ["qol"],
+    "source": "https://github.com/MeguminSama/moonlight-extensions",
+    "changelog": "Fixes for latest Discord"
+  },
+  "settings": {
+    "autoFocus": {
+      "displayName": "Automatically focus the search box",
+      "description": "When you open the favourites GIF picker, the search box will automatically be selected.",
+      "type": "boolean",
+      "advice": "none",
+      "default": true
+    }
+  }
 }
