@@ -63,7 +63,7 @@ export function renderGifSearchHeader(_this: GifPickerThis) {
 
   return (
     <SearchBar
-      className={styles.searchBar}
+      className={styles.input}
       size="md"
       query={query}
       onChange={onChange}
