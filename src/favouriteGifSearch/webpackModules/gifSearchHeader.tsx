@@ -6,7 +6,7 @@ import Fuse from "fuse.js";
 
 const i18n = spacepack.require("discord/intl");
 const SearchBar = spacepack.require("discord/uikit/search/SearchBar").default;
-const styles = spacepack.findByCode("searchBar:", "searchHeader:", "header:")[0].exports;
+const styles = spacepack.findByCode("input:", "container:", "iconButton:")[0].exports;
 
 interface FavouriteGif {
   order: number;
