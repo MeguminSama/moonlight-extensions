@@ -5,7 +5,7 @@ export const patches: ExtensionWebExports["patches"] = [
     find: ".getDesktopType()===",
     replace: [
       {
-        match: /if\(o.Z.dispatch\({type:"RPC_NOTIFICATION_CREATE",/,
+        match: /if\(\i\.\i\.dispatch\({type:"RPC_NOTIFICATION_CREATE",/,
         replacement: `if(!require("onePingPerDM_utils").isPrivateChannelRead(arguments[0]?.message))return; $&`,
       },
       {
